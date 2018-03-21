@@ -1,0 +1,45 @@
+uk:
+  name: "United Kingdom"
+  currency: "GBP"
+  cities:
+    london:
+      name: "London"
+      coordinates: [51.497915, -0.107167]
+    dublin:
+      name: "Dublin"
+      coordinates: [53.347547, -6.281021]
+  banks: [
+    "Barclays",
+    "HSBC",
+    "NatWest",
+    "Lloyds",
+    "Halifax",
+    "Santander"
+  ]
+de:
+  name: "Germany"
+  currency: "EUR"
+  cities:
+      berlin:
+        name: "Berlin"
+        coordinates: [52.543623, 13.406660]
+      frankfurt:
+        name: "Frankfurt"
+        coordinates: [50.129052, 8.681875]
+      munich:
+        name: "Munich"
+        coordinates: [48.153909, 11.580281]
+      hamburg:
+        name: "Hamburg"
+        coordinates: [53.554472, 10.010414]
+  banks: [
+    "Number 26",
+    "ING",
+    "Commerzbank",
+    "Deutsche Bank",
+    "Deutsche Kreditbank",
+    "Comdirect",
+    "Postbank",
+    "Sparkasse HBCI",
+    "Raiffeisen"
+]
