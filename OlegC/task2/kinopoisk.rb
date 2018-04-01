@@ -10,7 +10,8 @@ class Kinopoisk
     
     def collect_film_data(film)
         search_film(film)
-        return {} unless film_found?  #без этого не cработает
+        return {} unless film_found?
+        select_film
         {
             name: parse_name,
             year: parse_year,
@@ -24,9 +25,13 @@ class Kinopoisk
     def search_film(cinema)
         browser.text_field(name: "kp_query").set(cinema)
         browser.input(class: "header-search-partial-component__button").click
-        browser.div(class: "info").links[0].click if film_found?
+
     end
-    
+
+    def select_film
+        browser.div(class: "info").links[0].click
+    end
+
     def parse_name
         browser.h1(class: "moviename-big").text
     end
@@ -44,7 +49,7 @@ class Kinopoisk
     end
     
     def parse_main_actors
-        browser.div(id: "actorList").ul.text.split("\n")[0..-2]
+        browser.div(id: "actorList").ul.lis.map(&:text).split("\n")[0..-2]
     end
     
     def parse_poster_img
@@ -56,21 +61,27 @@ class Kinopoisk
     end
 end
 
-films = ["Пираты карибского моря 3", "Гарри Поттер дары смерти 1", "lolkekcheburek", "звездные войны империя наносит ответный удар", "ggggg"]
+films = [
+    "Пираты карибского моря 3",
+    "Гарри Поттер дары смерти 1",
+    "lolkekcheburek",
+    "звездные войны империя наносит ответный удар",
+    "ggggg"
+]
 kino = Kinopoisk.new
 wifi_failures_count = 0
-result = films.map {|film|
+result = films.map do |film|
     begin
         kino.collect_film_data(film)
-        rescue Watir::Exception => error
+    rescue Watir::Exception => error
         puts error
         {}
-        rescue Net::ReadTimeout => error
+    rescue Net::ReadTimeout => error
         wifi_failures_count += 1
         sleep(1)
         retry if wifi_failures_count <= 3
         {}
     end
-}
+end
 
 puts result
